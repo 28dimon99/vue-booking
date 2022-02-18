@@ -15,6 +15,7 @@
     "yarn": "^1.22.17"
   },
   "devDependencies": {
+    "@faker-js/faker": "*",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-service": "~4.5.15",

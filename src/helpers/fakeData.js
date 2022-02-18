@@ -1,9 +1,8 @@
-/*
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
-export const fakerList = (dates) => {
+export const fakerList = (dates, count = 1000) => {
     const res = [];
-    const count = 1000;
+
     for(let i = 0; i < count; i += 1){
         res.push({
             id: i,
@@ -13,4 +12,4 @@ export const fakerList = (dates) => {
         });
     }
     return res
-}*/
+}

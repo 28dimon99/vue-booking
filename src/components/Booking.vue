@@ -16,6 +16,7 @@
 
                     </v-stepper-header>
 
+
                     <v-stepper-items>
                         <v-stepper-content step="1">
                             <v-form ref="destinationForm">
@@ -72,12 +73,35 @@
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
+                            <v-list class="list_flights">
+                                        <v-list-item two-line v-for="item in flightsList" :key="item" @click="flightId = item.id">
+                                        <v-list-item-avatar>
+                                            <v-img :src="item.image"></v-img>
+                                        </v-list-item-avatar>
+                                        <v-list-item-content>
+                                            <v-list-item-title>{{item.title}}</v-list-item-title>
+                                            <v-list-item-subtitle>{{item.dates[0]}} - {{item.dates[1]}}</v-list-item-subtitle>
+                                        </v-list-item-content>
+                                            <v-list-item-action v-if="item.id === flightId">
+                                                <v-checkbox :value = "true"></v-checkbox>
+                                            </v-list-item-action>
+                                        </v-list-item>
+
+                            </v-list>
                           <v-row>
                               <v-col>
-                                  <v-btn rounded outlined dense color="accent" block>Cancel</v-btn>
+                                  <v-btn
+                                          rounded outlined dense
+                                          color="accent" block
+                                          @click="e1 = 1"
+                                  >
+                                      Cancel
+                                  </v-btn>
                               </v-col>
                               <v-col>
-                                  <v-btn rounded dense color="primary" block>Search</v-btn>
+                                  <v-btn rounded dense color="primary" block :disabled="flightId === null">
+                                      Search
+                                  </v-btn>
                               </v-col>
                           </v-row>
                         </v-stepper-content>
@@ -111,6 +135,8 @@
 </template>
 
 <script>
+
+import {fakerList} from '../helpers/fakeData'
     export default {
         name: "Booking",
         data() {
@@ -119,6 +145,7 @@
                 dates: [],
                 dateDialog: false,
                 destinations: ['Mars', 'Moon'],
+                flightId: null,
                 destination: null,
                 destinationRules: [v => !!v || 'Destination is required'],
                 dateStartRules: [v => !!v || 'Start date is required'],
@@ -134,10 +161,21 @@
                 }
                 this.e1 = 2
             }
+        },
+        computed:{
+            flightsList(){
+                return fakerList(['2022-01-20', '2022-01-22','2022-02-01'], 100)
+
+            }
         }
     }
 </script>
 
 <style scoped>
+    .list_flights{
+        height: 60vh;
+        overflow-y: auto;
+
+    }
 
 </style>
