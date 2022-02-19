@@ -83,7 +83,7 @@
                                             <v-list-item-subtitle>{{item.dates[0]}} - {{item.dates[1]}}</v-list-item-subtitle>
                                         </v-list-item-content>
                                             <v-list-item-action v-if="item.id === flightId">
-                                                <v-checkbox :value = "true"></v-checkbox>
+                                               <v-chip color="primary">Selected</v-chip>
                                             </v-list-item-action>
                                         </v-list-item>
 
@@ -99,7 +99,11 @@
                                   </v-btn>
                               </v-col>
                               <v-col>
-                                  <v-btn rounded dense color="primary" block :disabled="flightId === null">
+                                  <v-btn rounded dense
+                                         color="primary" block
+                                         :disabled="flightId === null"
+                                         @click="e1 = 3"
+                                  >
                                       Search
                                   </v-btn>
                               </v-col>
@@ -109,20 +113,39 @@
                         <v-stepper-content step="3">
                             <v-card
                                     class="mb-12"
-                                    color="grey lighten-1"
-                                    height="200px"
-                            ></v-card>
-
-                            <v-btn
-                                    color="primary"
-                                    @click="e1 = 1"
+                                    v-if="selectedFlights"
                             >
-                                Continue
-                            </v-btn>
+                                <v-img  :src="selectedFlights.image">
+                                    <v-card-title >{{selectedFlights.title}}</v-card-title>
+                                </v-img>
+                                <v-card-text>
+                                    <div class="subtitle-1">
+                                        {{selectedFlights.dates[0]}} - {{selectedFlights.dates[1]}}
+                                    </div>
+                                </v-card-text>
 
-                            <v-btn text>
-                                Cancel
-                            </v-btn>
+                            </v-card>
+
+                            <v-row>
+                                <v-col>
+                                    <v-btn
+                                            rounded outlined dense
+                                            color="accent" block
+                                            @click="e1 = 2"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                </v-col>
+                                <v-col>
+                                    <v-btn rounded dense
+                                           color="primary" block
+                                           :disabled="flightId === null"
+
+                                    >
+                                        Confirm
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
                         </v-stepper-content>
                     </v-stepper-items>
                 </v-stepper>
@@ -165,7 +188,9 @@ import {fakerList} from '../helpers/fakeData'
         computed:{
             flightsList(){
                 return fakerList(['2022-01-20', '2022-01-22','2022-02-01'], 100)
-
+            },
+            selectedFlights(){
+                return this.flightsList[this.flightId]
             }
         }
     }
